@@ -1,0 +1,45 @@
+package com.messenger.cryptosha.dto;
+
+import java.util.Date;
+
+public class ChatMessageDTO {
+    private int senderId;
+    private Long chatId;
+    private String content;
+    private Date timestamp;
+
+    public ChatMessageDTO() {
+    }
+
+    public int getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
+    }
+
+    public Long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(Long chatId) {
+        this.chatId = chatId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+}

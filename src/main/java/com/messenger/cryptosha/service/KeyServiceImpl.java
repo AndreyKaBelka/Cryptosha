@@ -1,6 +1,5 @@
 package com.messenger.cryptosha.service;
 
-import com.andreyka.crypto.ECPoint;
 import com.messenger.cryptosha.dto.KeyDTO;
 import com.messenger.cryptosha.model.KeyModel;
 import com.messenger.cryptosha.persistence.KeyPersistence;
