@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.InvalidParameterException;
+
 @RestController
 @RequestMapping("/key")
 public class KeyResource {
@@ -19,12 +21,17 @@ public class KeyResource {
 
     @GetMapping(value = "/{id}", produces = {"application/json"})
     public ResponseEntity<KeyDTO> getKeyById(@PathVariable Integer id) {
-        return ResponseEntity.ok(keyService.getUserKeyDTO(id));
+        try {
+            KeyDTO keyDTO = keyService.getUserKeyDTO(id);
+            return ResponseEntity.ok(keyDTO);
+        } catch (InvalidParameterException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<String> setKeyById(@RequestBody KeyDTO body) throws ECPointParseException {
         keyService.setUserPublicKey(body);
-        return ResponseEntity.ok("Success!");
+        return ResponseEntity.ok().build();
     }
 }
