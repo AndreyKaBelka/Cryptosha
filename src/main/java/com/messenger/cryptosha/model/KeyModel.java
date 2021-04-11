@@ -12,7 +12,7 @@ public class KeyModel {
     private String publicKey;
 
     @Id
-    @Column(name = "userId", unique = true)
+    @Column(name = "user_id", unique = true)
     public int getUserId() {
         return userId;
     }
@@ -20,7 +20,7 @@ public class KeyModel {
         this.userId = userId;
     }
 
-    @Column(name = "publicKey", unique = true)
+    @Column(name = "public_key", unique = true)
     public String getPublicKey() {
         return publicKey;
     }
