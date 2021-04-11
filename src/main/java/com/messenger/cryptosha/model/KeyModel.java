@@ -8,15 +8,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "UserPublicKey")
 public class KeyModel {
-    private int userId;
+    private Long userId;
     private String publicKey;
 
     @Id
     @Column(name = "user_id", unique = true)
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
