@@ -1,5 +1,6 @@
 package com.messenger.cryptosha.resource;
 
+import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.management.OperationsException;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -24,7 +25,18 @@ public class ChatResource {
 
     @GetMapping("/create")
     public ResponseEntity<Map<String, Object>> createChat(@RequestParam String chatName) throws OperationsException {
-        Long chatId = chatService.createChat(chatName);
-        return ResponseEntity.ok(Collections.singletonMap("chatId", chatId));
+        ChatDTO chatDTO = chatService.createChat(chatName);
+        Map<String, Object> json = new HashMap<>();
+        json.put("chatId", chatDTO.getId());
+        return ResponseEntity.ok(json);
+    }
+
+    @GetMapping("/connect")
+    public ResponseEntity<Map<String, Object>> connectToChat(@RequestParam Long chatId, @RequestParam Long userId) {
+        ChatDTO chatDTO = chatService.addUserToChat(chatId, userId);
+        Map<String, Object> json = new HashMap<>();
+        json.put("chatTitle", chatDTO.getChatName());
+        json.put("chatPublicKey", chatDTO.getPublicKey().toString());
+        return ResponseEntity.ok(json);
     }
 }

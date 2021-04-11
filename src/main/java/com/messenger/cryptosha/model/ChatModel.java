@@ -1,6 +1,7 @@
 package com.messenger.cryptosha.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -8,7 +9,7 @@ import java.util.Set;
 public class ChatModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long chatId;
 
     private String privateKey;
 
@@ -16,11 +17,16 @@ public class ChatModel {
 
     private String chatName;
 
-    @ManyToMany
-    private Set<UserModel> usersInChat;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_chats",
+            joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<UserModel> users = new HashSet<>();
 
-    public Long getId() {
-        return id;
+    public Long getChatId() {
+        return chatId;
     }
 
     public String getPrivateKey() {
@@ -47,11 +53,21 @@ public class ChatModel {
         this.chatName = chatName;
     }
 
-    public Set<UserModel> getUsersInChat() {
-        return usersInChat;
+    public Set<UserModel> getUsers() {
+        return users;
     }
 
-    public void setUsersInChat(Set<UserModel> usersInChat) {
-        this.usersInChat = usersInChat;
+    public void setUsers(Set<UserModel> users) {
+        this.users = users;
+    }
+
+    public void removeUser(UserModel user) {
+        this.users.remove(user);
+        user.getChats().remove(this);
+    }
+
+    public void addUser(UserModel user) {
+        this.users.add(user);
+        user.getChats().add(this);
     }
 }

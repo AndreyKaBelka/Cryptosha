@@ -1,6 +1,7 @@
 package com.messenger.cryptosha.dto;
 
 import com.andreyka.crypto.ECPoint;
+import com.messenger.cryptosha.model.UserModel;
 
 import java.util.Set;
 
@@ -9,7 +10,7 @@ public class ChatDTO {
     private String privateKey;
     private ECPoint publicKey;
     private String chatName;
-    private Set<UserDTO> usersInChat;
+    private Set<UserModel> usersInChat;
 
     public ChatDTO() {
     }
@@ -38,11 +39,11 @@ public class ChatDTO {
         this.chatName = chatName;
     }
 
-    public Set<UserDTO> getUsersInChat() {
+    public Set<UserModel> getUsersInChat() {
         return usersInChat;
     }
 
-    public void setUsersInChat(Set<UserDTO> usersInChat) {
+    public void setUsersInChat(Set<UserModel> usersInChat) {
         this.usersInChat = usersInChat;
     }
 
