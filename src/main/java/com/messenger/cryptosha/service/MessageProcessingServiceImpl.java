@@ -6,6 +6,9 @@ import com.messenger.cryptosha.persistence.ChatMessagePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class MessageProcessingServiceImpl implements MessageProcessingService {
     private final ChatMessagePersistence chatMessagePersistence;
@@ -19,6 +22,15 @@ public class MessageProcessingServiceImpl implements MessageProcessingService {
     public void saveChatMessage(ChatMessageDTO chatMessageDTO) {
         ChatMessageModel chatMessageModel = mapToModel(chatMessageDTO);
         chatMessagePersistence.saveChatMessage(chatMessageModel);
+    }
+
+    @Override
+    public List<ChatMessageDTO> getAllMessagesByChat(Long chatId) {
+        return chatMessagePersistence
+                .getMessagesForChat(chatId)
+                .stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     private ChatMessageModel mapToModel(ChatMessageDTO chatMessageDTO) {

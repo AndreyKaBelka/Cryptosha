@@ -22,6 +22,11 @@ public class ChatNotificationServiceImpl implements ChatNotificationService {
     }
 
     @Override
+    public void deleteNotification(Long userId, Long chatId) {
+        chatNotificationPersistence.deleteNotificationFor(userId, chatId);
+    }
+
+    @Override
     public ChatNotificationDTO mapToDTO(ChatNotificationModel chatNotificationModel) {
         ChatNotificationDTO chatNotificationDTO = new ChatNotificationDTO();
         chatNotificationDTO.setChatId(chatNotificationModel.getChatId());

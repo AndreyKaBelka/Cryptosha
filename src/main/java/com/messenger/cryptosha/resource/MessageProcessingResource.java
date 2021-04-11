@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class MessageProcessingResource {
@@ -19,7 +23,8 @@ public class MessageProcessingResource {
     @Autowired
     public MessageProcessingResource(MessageProcessingService messageProcessingService,
                                      SimpMessagingTemplate simpMessagingTemplate,
-                                     ChatNotificationService chatNotificationService, ChatService chatService) {
+                                     ChatNotificationService chatNotificationService,
+                                     ChatService chatService) {
         this.messageProcessingService = messageProcessingService;
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.chatNotificationService = chatNotificationService;
@@ -35,5 +40,11 @@ public class MessageProcessingResource {
         simpMessagingTemplate.convertAndSendToUser(
                 String.valueOf(chatMessageDTO.getChatId()), "/queue/messages", "Notification"
         );
+    }
+
+    @GetMapping("/getMessages")
+    public List<ChatMessageDTO> getMessage(@RequestParam Long chatId, @RequestParam Long userId) {
+        chatNotificationService.deleteNotification(userId, chatId);
+        return messageProcessingService.getAllMessagesByChat(chatId);
     }
 }

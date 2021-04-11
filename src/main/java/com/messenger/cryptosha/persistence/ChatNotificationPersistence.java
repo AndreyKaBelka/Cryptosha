@@ -24,6 +24,15 @@ public class ChatNotificationPersistence {
         return chatNotificationRepository.saveAndFlush(model);
     }
 
+    public void deleteNotificationFor(Long userId, Long chatId) {
+        ChatNotificationModel chatNotificationModel = new ChatNotificationModel();
+        chatNotificationModel.setChatId(chatId);
+        chatNotificationModel.setUserId(userId);
+        chatNotificationRepository
+                .findAll(Example.of(chatNotificationModel))
+                .forEach(chatNotificationRepository::delete);
+    }
+
     public Long getNotificationCountForChatAndUser(Long chatId, Long userId) {
         ChatNotificationModel chatNotificationModel = new ChatNotificationModel();
         chatNotificationModel.setChatId(chatId);
