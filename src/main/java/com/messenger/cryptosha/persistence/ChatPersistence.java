@@ -29,4 +29,8 @@ public class ChatPersistence {
         chatModel.addUser(userModel);
         return chatRepository.saveAndFlush(chatModel);
     }
+
+    public ChatModel getChatById(Long chatId) {
+        return chatRepository.getOne(chatId);
+    }
 }

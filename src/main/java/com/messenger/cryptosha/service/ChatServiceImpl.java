@@ -4,11 +4,16 @@ import com.andreyka.crypto.KeyPair;
 import com.messenger.cryptosha.ChatTransformer;
 import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.dto.UserDTO;
+import com.messenger.cryptosha.model.ChatModel;
+import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.persistence.ChatPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.OperationsException;
+import java.util.Arrays;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -38,6 +43,16 @@ public class ChatServiceImpl implements ChatService {
     public ChatDTO addUserToChat(Long chatId, Long userId) {
         UserDTO userDTO = userService.getUserById(userId);
         return chatTransformer.mapToDTO(chatPersistence.addUserToChat(chatId, chatTransformer.mapToModel(userDTO)));
+    }
+
+    @Override
+    public Long[] getChatUserIds(Long chatId) {
+        ChatModel chatModel = chatPersistence.getChatById(chatId);
+        return chatModel
+                .getUsers()
+                .stream()
+                .map(UserModel::getUserId)
+                .toArray(Long[]::new);
     }
 
 }

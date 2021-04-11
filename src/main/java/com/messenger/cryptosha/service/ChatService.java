@@ -9,4 +9,6 @@ public interface ChatService {
     ChatDTO createChat(String chatName) throws OperationsException;
 
     ChatDTO addUserToChat(Long chatId, Long userId);
+
+    Long[] getChatUserIds(Long chatId);
 }
