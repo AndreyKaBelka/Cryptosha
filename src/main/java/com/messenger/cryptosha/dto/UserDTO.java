@@ -1,13 +1,11 @@
 package com.messenger.cryptosha.dto;
 
-import com.messenger.cryptosha.model.ChatModel;
-
 import java.util.Set;
 
 public class UserDTO {
     private Long id;
     private String username;
-    private Set<ChatModel> chats;
+    private Set<Long> chatsId;
 
     public UserDTO() {
     }
@@ -28,11 +26,11 @@ public class UserDTO {
         this.id = id;
     }
 
-    public void setChats(Set<ChatModel> chats) {
-        this.chats = chats;
+    public void setChats(Set<Long> chatsId) {
+        this.chatsId = chatsId;
     }
 
-    public Set<ChatModel> getChats() {
-        return chats;
+    public Set<Long> getChats() {
+        return chatsId;
     }
 }

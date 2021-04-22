@@ -33,18 +33,19 @@ public class MessageProcessingResource {
 
     @MessageMapping("/sendMessage")
     public void messageHandling(@Payload ChatMessageDTO chatMessageDTO) {
-        messageProcessingService.saveChatMessage(chatMessageDTO);
+        Long messageId = messageProcessingService.saveChatMessage(chatMessageDTO);
         for (Long userId: chatService.getChatUserIds(chatMessageDTO.getChatId())) {
-            chatNotificationService.addNotification(userId, chatMessageDTO.getChatId());
+            chatNotificationService.addNotification(userId, chatMessageDTO.getChatId(), messageId);
+            simpMessagingTemplate.convertAndSendToUser(
+                    String.valueOf(userId), "/queue/messages", "Notification"
+            );
         }
-        simpMessagingTemplate.convertAndSendToUser(
-                String.valueOf(chatMessageDTO.getChatId()), "/queue/messages", "Notification"
-        );
     }
 
     @GetMapping("/getMessages")
     public List<ChatMessageDTO> getMessage(@RequestParam Long chatId, @RequestParam Long userId) {
+        List<ChatMessageDTO> messages = messageProcessingService.getAllMessagesByChat(chatId);
         chatNotificationService.deleteNotification(userId, chatId);
-        return messageProcessingService.getAllMessagesByChat(chatId);
+        return messages;
     }
 }

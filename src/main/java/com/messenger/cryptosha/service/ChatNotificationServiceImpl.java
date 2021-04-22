@@ -6,6 +6,10 @@ import com.messenger.cryptosha.persistence.ChatNotificationPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Service
 public class ChatNotificationServiceImpl implements ChatNotificationService {
     private final ChatNotificationPersistence chatNotificationPersistence;
@@ -16,8 +20,8 @@ public class ChatNotificationServiceImpl implements ChatNotificationService {
     }
 
     @Override
-    public ChatNotificationDTO addNotification(Long userId, Long chatId) {
-        ChatNotificationModel model = chatNotificationPersistence.save(chatId, userId);
+    public ChatNotificationDTO addNotification(Long userId, Long chatId, Long messageId) {
+        ChatNotificationModel model = chatNotificationPersistence.save(chatId, userId, messageId);
         return mapToDTO(model);
     }
 
@@ -33,6 +37,13 @@ public class ChatNotificationServiceImpl implements ChatNotificationService {
         chatNotificationDTO.setUserId(chatNotificationModel.getUserId());
         chatNotificationDTO.setId(chatNotificationModel.getId());
         chatNotificationDTO.setMessageStatus(chatNotificationModel.getMessageStatus());
+        chatNotificationDTO.setMessageId(chatNotificationModel.getMessageId());
         return chatNotificationDTO;
+    }
+
+    @Override
+    public List<ChatNotificationDTO> getNotificationsForUserAndChat(Long userId, Long chatId) {
+        List<ChatNotificationModel> models = chatNotificationPersistence.getNotifications(userId, chatId);
+        return models.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 }

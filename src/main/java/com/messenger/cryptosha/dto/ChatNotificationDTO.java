@@ -7,6 +7,15 @@ public class ChatNotificationDTO {
     private Long chatId;
     private MessageStatus messageStatus;
     private Long userId;
+    private Long messageId;
+
+    public Long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
+    }
 
     public Long getUserId() {
         return userId;

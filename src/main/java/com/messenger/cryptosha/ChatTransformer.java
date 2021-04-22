@@ -4,15 +4,31 @@ import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.dto.UserDTO;
 import com.messenger.cryptosha.model.ChatModel;
 import com.messenger.cryptosha.model.UserModel;
+import com.messenger.cryptosha.persistence.ChatPersistence;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatTransformer {
+    private final ChatPersistence chatPersistence;
+
+    @Autowired
+    public ChatTransformer(ChatPersistence chatPersistence) {
+        this.chatPersistence = chatPersistence;
+    }
 
     public UserDTO mapToDTO(UserModel userModel) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(userModel.getUsername());
-        userDTO.setChats(userModel.getChats());
+        Set<Long> chatsId = userModel
+                .getChats()
+                .stream()
+                .map(ChatModel::getChatId)
+                .collect(Collectors.toSet());
+        userDTO.setChats(chatsId);
         userDTO.setId(userModel.getUserId());
         return userDTO;
     }
@@ -21,7 +37,12 @@ public class ChatTransformer {
         UserModel userModel = new UserModel();
         userModel.setUsername(userDTO.getUsername());
         userModel.setUserId(userDTO.getId());
-        userModel.setChats(userDTO.getChats());
+        Set<ChatModel> chatModels = userDTO
+                .getChats()
+                .stream()
+                .map(chatPersistence::getChatById)
+                .collect(Collectors.toSet());
+        userModel.setChats(chatModels);
         return userModel;
     }
 
@@ -29,7 +50,11 @@ public class ChatTransformer {
     public ChatDTO mapToDTO(ChatModel chatModel) {
         ChatDTO chatDTO = new ChatDTO();
         chatDTO.setChatName(chatModel.getChatName());
-        chatDTO.setUsersInChat(chatModel.getUsers());
+        Set<Long> usersInChat = chatModel
+                .getUsers().stream()
+                .map(UserModel::getUserId)
+                .collect(Collectors.toSet());
+        chatDTO.setUsersIdInChat(usersInChat);
         chatDTO.setPublicKey(chatModel.getPublicKey());
         chatDTO.setPrivateKey(chatModel.getPrivateKey());
         chatDTO.setId(chatModel.getChatId());

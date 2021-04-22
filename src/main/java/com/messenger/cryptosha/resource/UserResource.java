@@ -23,7 +23,7 @@ public class UserResource {
         this.keyService = keyService;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Map<String, Object>> createUser(@RequestBody Map<String, String> json) {
         UserDTO userDTO = userService.createUser(json.get("username"));
         KeyDTO keyDTO = new KeyDTO();
@@ -31,5 +31,10 @@ public class UserResource {
         keyDTO.setPublicKey(json.get("publicKey"));
         keyService.setUserPublicKey(keyDTO);
         return ResponseEntity.ok(Collections.singletonMap("userId", userDTO.getId()));
+    }
+
+    @GetMapping
+    public UserDTO getUser(@RequestParam Long userId) {
+        return userService.getUserById(userId);
     }
 }

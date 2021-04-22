@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+/js-tests/.env
+/js-tests/node_modules/
+/js-tests/package-lock.json

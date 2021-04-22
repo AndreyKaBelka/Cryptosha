@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ChatNotificationPersistence {
     private final ChatNotificationRepository chatNotificationRepository;
@@ -16,11 +18,12 @@ public class ChatNotificationPersistence {
         this.chatNotificationRepository = chatNotificationRepository;
     }
 
-    public ChatNotificationModel save(Long chatId, Long userId) {
+    public ChatNotificationModel save(Long chatId, Long userId, Long messageId) {
         ChatNotificationModel model = new ChatNotificationModel();
         model.setChatId(chatId);
         model.setUserId(userId);
         model.setMessageStatus(MessageStatus.DELIVERED);
+        model.setMessageId(messageId);
         return chatNotificationRepository.saveAndFlush(model);
     }
 
@@ -38,5 +41,12 @@ public class ChatNotificationPersistence {
         chatNotificationModel.setChatId(chatId);
         chatNotificationModel.setUserId(userId);
         return chatNotificationRepository.count(Example.of(chatNotificationModel));
+    }
+
+    public List<ChatNotificationModel> getNotifications(Long userId, Long chatId) {
+        ChatNotificationModel chatNotificationModel = new ChatNotificationModel();
+        chatNotificationModel.setChatId(chatId);
+        chatNotificationModel.setUserId(userId);
+        return chatNotificationRepository.findAll(Example.of(chatNotificationModel));
     }
 }

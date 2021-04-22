@@ -3,6 +3,7 @@ package com.messenger.cryptosha.dto;
 import java.util.Date;
 
 public class ChatMessageDTO {
+    private Long id;
     private int senderId;
     private Long chatId;
     private String content;
@@ -50,5 +51,13 @@ public class ChatMessageDTO {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

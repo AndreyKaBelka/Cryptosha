@@ -17,13 +17,17 @@ public class ChatMessagePersistence {
         this.chatMessageRepository = chatMessageRepository;
     }
 
-    public void saveChatMessage(ChatMessageModel chatMessageModel) {
-        chatMessageRepository.save(chatMessageModel);
+    public ChatMessageModel saveChatMessage(ChatMessageModel chatMessageModel) {
+        return chatMessageRepository.save(chatMessageModel);
     }
 
     public List<ChatMessageModel> getMessagesForChat(Long chatId) {
         ChatMessageModel chatMessageModel = new ChatMessageModel();
         chatMessageModel.setChatId(chatId);
         return chatMessageRepository.findAll(Example.of(chatMessageModel));
+    }
+
+    public ChatMessageModel getById(Long messageId) {
+        return chatMessageRepository.getOne(Math.toIntExact(messageId));
     }
 }

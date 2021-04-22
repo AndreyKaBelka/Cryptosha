@@ -12,6 +12,7 @@ public class ChatNotificationModel {
     private Long id;
     private Long chatId;
     private Long userId;
+    private Long messageId;
 
     @Enumerated(EnumType.STRING)
     private MessageStatus messageStatus;
@@ -28,10 +29,6 @@ public class ChatNotificationModel {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getChatId() {
         return chatId;
     }
@@ -46,5 +43,13 @@ public class ChatNotificationModel {
 
     public void setMessageStatus(MessageStatus messageStatus) {
         this.messageStatus = messageStatus;
+    }
+
+    public Long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
     }
 }

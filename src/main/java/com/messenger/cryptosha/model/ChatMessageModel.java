@@ -49,4 +49,12 @@ public class ChatMessageModel {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

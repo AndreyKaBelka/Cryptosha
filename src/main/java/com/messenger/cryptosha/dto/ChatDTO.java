@@ -10,7 +10,7 @@ public class ChatDTO {
     private String privateKey;
     private ECPoint publicKey;
     private String chatName;
-    private Set<UserModel> usersInChat;
+    private Set<Long> usersIdInChat;
 
     public ChatDTO() {
     }
@@ -39,12 +39,12 @@ public class ChatDTO {
         this.chatName = chatName;
     }
 
-    public Set<UserModel> getUsersInChat() {
-        return usersInChat;
+    public Set<Long> getUsersIdInChat() {
+        return usersIdInChat;
     }
 
-    public void setUsersInChat(Set<UserModel> usersInChat) {
-        this.usersInChat = usersInChat;
+    public void setUsersIdInChat(Set<Long> usersIdInChat) {
+        this.usersIdInChat = usersIdInChat;
     }
 
     public ECPoint getPublicKey() {
