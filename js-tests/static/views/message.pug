@@ -1,0 +1,12 @@
+html
+    head
+        title message
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js')
+        script(type='text/javascript', src='js/message.js')
+
+    body
+        div
+            p
+                | text:
+                input(type='text', name='content', value='', id='messageContent')
+            input(type='button', value='Send message', id='sendMessage')
