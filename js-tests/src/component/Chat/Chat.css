@@ -1,0 +1,17 @@
+.chatBox {
+    padding: 10px 40px 30px;
+    margin: 1px;
+    border: 3px solid #4174c7;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #74b9ff;
+    text-align: left;
+}
+
+.chatTitle {
+    font-size: 20px;
+}
+
+.chatMessage {
+    font-size: 16px;
+}

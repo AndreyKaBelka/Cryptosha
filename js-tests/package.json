@@ -4,7 +4,8 @@
   "description": "Just for testing rest api",
   "main": "app.js",
   "scripts": {
-    "start": "supervisor app.js"
+    "start": "supervisor app.js",
+    "start-react": "react-scripts start"
   },
   "author": "AndreyKaBelka",
   "license": "MIT",
@@ -14,8 +15,25 @@
     "node-env-file": "^0.1.8",
     "node-fetch": "^2.6.1",
     "pug": "^3.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3",
     "sockjs-client": "^1.5.1",
     "stompjs": "^2.3.3",
-    "urijs": "^1.19.6"
+    "urijs": "^1.19.6",
+    "with": "^7.0.2",
+    "yarn": "^1.22.10"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

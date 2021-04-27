@@ -1,13 +1,17 @@
-const serverRequest = require("../utils/serverRequest");
-const URI = require('urijs')
-
-function routes(router) {
+function routes(router, client) {
     router.get('/message', (req, res) => {
-        res.render('message', {bundle: '../js/message.js'});
+        res.render('chat', { bundle: '../js/message.js' });
     })
 
     router.post('/message', (req, res) => {
-        console.log(req.body)
+        const { content, timestamp, senderId, chatId } = req.body;
+        const message = {
+            content,
+            timestamp,
+            senderId,
+            chatId
+        }
+        client.send('/app/sendMessage', {}, JSON.stringify(message))
         return res.json({
             success: true
         })
