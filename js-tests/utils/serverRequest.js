@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 
-async function serverRequest(url, opts) {
+export default async function serverRequest(url, opts) {
     opts.body = JSON.stringify(opts.body)
     return await fetch(`${process.env.BASE_URL}${url}`, {
         ...opts,
@@ -10,5 +10,3 @@ async function serverRequest(url, opts) {
         }
     }).then(data => data.text()).catch((err) => console.log(err))
 }
-
-module.exports = serverRequest

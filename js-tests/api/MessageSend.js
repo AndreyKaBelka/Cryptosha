@@ -1,6 +1,8 @@
-function routes(router, client) {
+
+//TODO: fix message send
+export default function MessageSend() {
     router.get('/message', (req, res) => {
-        res.render('chat', { bundle: '../js/message.js' });
+        res.render('chat', { bundle: '../js/MessageSend.js' });
     })
 
     router.post('/message', (req, res) => {

@@ -1,12 +1,11 @@
-const userRoutes = require('./user')
-const messageRoutes = require('./message')
 const Stomp = require('stompjs');
 let sockjs = require('sockjs-client');
 
-function routes (router) {
+const client = function (){};
+
+function ClientCreate (userId) {
     sockjs = new sockjs(`${process.env.BASE_URL}/ws`)
     const client = Stomp.over(sockjs);
-    const userId = 1;
 
     client.connect({},
         () => {
@@ -18,13 +17,12 @@ function routes (router) {
             console.log(err);
         }
     )
-
-    userRoutes(router)
-    messageRoutes(router, client)
 }
+
+client.prototype.ClientCreate = ClientCreate;
 
 function onMessageReceived(message) {
     console.log(message);
 }
 
-module.exports = routes
+export default client;
