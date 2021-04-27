@@ -1,7 +1,6 @@
 package com.messenger.cryptosha.resource;
 
 import com.messenger.cryptosha.dto.ChatMessageDTO;
-import com.messenger.cryptosha.dto.ChatNotificationDTO;
 import com.messenger.cryptosha.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -34,11 +33,14 @@ public class MessageProcessingResource {
     @MessageMapping("/sendMessage")
     public void messageHandling(@Payload ChatMessageDTO chatMessageDTO) {
         Long messageId = messageProcessingService.saveChatMessage(chatMessageDTO);
+        chatMessageDTO.setId(messageId);
         for (Long userId: chatService.getChatUserIds(chatMessageDTO.getChatId())) {
-            chatNotificationService.addNotification(userId, chatMessageDTO.getChatId(), messageId);
-            simpMessagingTemplate.convertAndSendToUser(
-                    String.valueOf(userId), "/queue/messages", "Notification"
-            );
+            if (userId != chatMessageDTO.getSenderId()) {
+                chatNotificationService.addNotification(userId, chatMessageDTO.getChatId(), messageId);
+                simpMessagingTemplate.convertAndSendToUser(
+                        String.valueOf(userId), "/queue/messages", chatMessageDTO
+                );
+            }
         }
     }
 

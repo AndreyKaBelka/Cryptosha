@@ -63,7 +63,7 @@ public class MessageProcessingServiceImpl implements MessageProcessingService {
         chatMessageDTO.setSenderId(chatMessageModel.getSenderId());
         chatMessageDTO.setTimestamp(chatMessageModel.getTimestamp());
         chatMessageDTO.setContent(chatMessageModel.getContent());
-        chatMessageDTO.setMessageId(chatMessageModel.getId());
+        chatMessageDTO.setId(chatMessageModel.getId());
         return chatMessageDTO;
     }
 

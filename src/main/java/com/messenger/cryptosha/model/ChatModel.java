@@ -17,7 +17,7 @@ public class ChatModel {
 
     private String chatName;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_chats",
             joinColumns = @JoinColumn(name = "chat_id"),

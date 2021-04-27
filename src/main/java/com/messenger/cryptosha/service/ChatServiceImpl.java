@@ -9,6 +9,7 @@ import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.persistence.ChatPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.management.OperationsException;
 import java.util.Arrays;
@@ -45,6 +46,7 @@ public class ChatServiceImpl implements ChatService {
         return chatTransformer.mapToDTO(chatPersistence.addUserToChat(chatId, chatTransformer.mapToModel(userDTO)));
     }
 
+    @Transactional
     @Override
     public Long[] getChatUserIds(Long chatId) {
         ChatModel chatModel = chatPersistence.getChatById(chatId);
