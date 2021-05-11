@@ -21,6 +21,9 @@ public class ChatTransformer {
     }
 
     public UserDTO mapToDTO(UserModel userModel) {
+        if (userModel == null) {
+            return null;
+        }
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(userModel.getUsername());
         Set<Long> chatsId = userModel

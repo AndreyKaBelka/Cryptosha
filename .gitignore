@@ -34,4 +34,3 @@ build/
 /js-tests/.env
 /js-tests/node_modules/
 /js-tests/package-lock.json
-/js-tests/yarn.lock

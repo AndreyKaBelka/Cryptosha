@@ -2,12 +2,10 @@ package com.messenger.cryptosha.resource;
 
 import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.service.ChatService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.management.OperationsException;
 import java.util.HashMap;
@@ -32,11 +30,21 @@ public class ChatResource {
     }
 
     @GetMapping("/connect")
-    public ResponseEntity<Map<String, Object>> connectToChat(@RequestParam Long chatId, @RequestParam Long userId) {
+    public ResponseEntity<Map<String, Object>> connectToChat(@RequestParam Long chatId, @CookieValue(value = "userId", defaultValue = "-1") Long userId) throws NotFoundException {
         ChatDTO chatDTO = chatService.addUserToChat(chatId, userId);
         Map<String, Object> json = new HashMap<>();
         json.put("chatTitle", chatDTO.getChatName());
         json.put("chatPublicKey", chatDTO.getPublicKey().toString());
         return ResponseEntity.ok(json);
+    }
+
+    @GetMapping
+    public ResponseEntity<ChatDTO> getChatByIdForUser(@RequestParam Long chatId, @CookieValue(value = "userId", defaultValue = "-1") Long userId) throws NotFoundException {
+        ChatDTO chatDTO = chatService.getChatById(chatId);
+        if (chatService.isUserConnected(chatId, userId)) {
+            return ResponseEntity.ok(chatDTO);
+        } else {
+            return ResponseEntity.badRequest().body(new ChatDTO());
+        }
     }
 }

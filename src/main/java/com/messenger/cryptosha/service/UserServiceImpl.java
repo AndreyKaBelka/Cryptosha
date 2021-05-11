@@ -4,6 +4,7 @@ import com.messenger.cryptosha.ChatTransformer;
 import com.messenger.cryptosha.dto.UserDTO;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.persistence.UserPersistence;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserById(Long userId) {
+    public UserDTO getUserById(Long userId) throws NotFoundException {
         UserModel userModel = userPersistence.getUserById(userId);
+        if (userModel == null) {
+            throw new NotFoundException(String.format("User with id %s not found", userId));
+        }
         return chatTransformer.mapToDTO(userModel);
     }
 
