@@ -2,8 +2,8 @@ spring:
   datasource:
     driverClassName: org.h2.Driver
     url: jdbc:h2:file:./target/test;
-    username: sa
-    password:
+    username: root
+    password: SA
     h2:
       console:
         enabled: true
