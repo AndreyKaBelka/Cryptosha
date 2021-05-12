@@ -1,5 +1,7 @@
 package com.messenger.cryptosha.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class ChatMessageDTO {
@@ -7,6 +9,7 @@ public class ChatMessageDTO {
     private int senderId;
     private Long chatId;
     private String content;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     private Date timestamp;
 
     public ChatMessageDTO() {

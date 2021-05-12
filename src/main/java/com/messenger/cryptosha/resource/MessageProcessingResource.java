@@ -1,11 +1,16 @@
 package com.messenger.cryptosha.resource;
 
 import com.messenger.cryptosha.dto.ChatMessageDTO;
-import com.messenger.cryptosha.service.*;
+import com.messenger.cryptosha.service.ChatNotificationService;
+import com.messenger.cryptosha.service.ChatService;
+import com.messenger.cryptosha.service.MessageProcessingService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +39,7 @@ public class MessageProcessingResource {
     public void messageHandling(@Payload ChatMessageDTO chatMessageDTO) {
         Long messageId = messageProcessingService.saveChatMessage(chatMessageDTO);
         chatMessageDTO.setId(messageId);
-        for (Long userId: chatService.getChatUserIds(chatMessageDTO.getChatId())) {
+        for (Long userId : chatService.getChatUserIds(chatMessageDTO.getChatId())) {
             if (userId != chatMessageDTO.getSenderId()) {
                 chatNotificationService.addNotification(userId, chatMessageDTO.getChatId(), messageId);
                 simpMessagingTemplate.convertAndSendToUser(
@@ -45,9 +50,12 @@ public class MessageProcessingResource {
     }
 
     @GetMapping("/getMessages")
-    public List<ChatMessageDTO> getMessage(@RequestParam Long chatId, @RequestParam Long userId) {
+    public ResponseEntity<?> getMessages(@RequestParam Long chatId, @CookieValue(value = "userId", defaultValue = "-1") Long userId) throws NotFoundException {
+        if (!chatService.isUserConnected(chatId, userId)) {
+            return ResponseEntity.badRequest().body("User not connected to this chat!");
+        }
         List<ChatMessageDTO> messages = messageProcessingService.getAllMessagesByChat(chatId);
         chatNotificationService.deleteNotification(userId, chatId);
-        return messages;
+        return ResponseEntity.ok(messages);
     }
 }
