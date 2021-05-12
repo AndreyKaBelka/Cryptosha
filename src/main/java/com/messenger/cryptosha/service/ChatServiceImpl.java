@@ -79,7 +79,7 @@ public class ChatServiceImpl implements ChatService {
     public Set<ChatDTO> getAllChatsForUser(Long userId) {
         return chatPersistence.getAllChatsForUser(userId)
                 .stream()
-                .map(chatTransformer::mapToDTO)
+                .map(chatTransformer::mapToMinDTO)
                 .collect(Collectors.toSet());
     }
 

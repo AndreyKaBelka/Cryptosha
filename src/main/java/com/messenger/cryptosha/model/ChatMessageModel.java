@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "chatMessage")
+@Table(name = "chat_message")
 public class ChatMessageModel {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")

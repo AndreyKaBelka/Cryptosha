@@ -63,4 +63,15 @@ public class ChatTransformer {
         chatDTO.setId(chatModel.getChatId());
         return chatDTO;
     }
+
+    public ChatDTO mapToMinDTO(ChatModel chatModel) {
+        if (chatModel == null) {
+            return null;
+        }
+        ChatDTO minChatDTO = new ChatDTO();
+        minChatDTO.setId(chatModel.getChatId());
+        minChatDTO.setChatName(chatModel.getChatName());
+        minChatDTO.setPublicKey(chatModel.getPublicKey());
+        return minChatDTO;
+    }
 }

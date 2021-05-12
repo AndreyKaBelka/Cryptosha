@@ -1,5 +1,7 @@
 package com.messenger.cryptosha.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,7 +10,8 @@ import java.util.Set;
 @Table(name = "user")
 public class UserModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @GeneratedValue(generator = "generator")
     private Long userId;
     private String username;
 

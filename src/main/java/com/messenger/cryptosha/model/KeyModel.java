@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "UserPublicKey")
+@Table(name = "user_public_key")
 public class KeyModel {
     private Long userId;
     private String publicKey;
