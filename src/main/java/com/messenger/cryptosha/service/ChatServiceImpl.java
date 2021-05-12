@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.management.OperationsException;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -72,6 +73,14 @@ public class ChatServiceImpl implements ChatService {
                 .stream()
                 .map(UserModel::getUserId)
                 .toArray(Long[]::new);
+    }
+
+    @Override
+    public Set<ChatDTO> getAllChatsForUser(Long userId) {
+        return chatPersistence.getAllChatsForUser(userId)
+                .stream()
+                .map(chatTransformer::mapToDTO)
+                .collect(Collectors.toSet());
     }
 
 }

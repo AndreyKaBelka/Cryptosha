@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.management.OperationsException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/chat")
@@ -46,5 +47,11 @@ public class ChatResource {
         } else {
             return ResponseEntity.badRequest().body(new ChatDTO());
         }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Set<ChatDTO>> getAllChatsForUser(@CookieValue(value = "userId", defaultValue = "-1") Long userId) {
+        Set<ChatDTO> chats = chatService.getAllChatsForUser(userId);
+        return ResponseEntity.ok(chats);
     }
 }
