@@ -18,8 +18,12 @@
     </properties>
     <repositories>
         <repository>
-            <id>com.andreyka</id>
-            <url>https://github.com/AndreyKaBelka?tab=packages&amp;repo_name=Cryptography</url>
+            <id>Cryptography-mvn-repo</id>
+            <url>https://github.com/AndreyKaBelka/Cryptography/raw/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
         </repository>
     </repositories>
     <dependencies>
