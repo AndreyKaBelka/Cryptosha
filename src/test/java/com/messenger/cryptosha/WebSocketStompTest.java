@@ -1,5 +1,6 @@
 package com.messenger.cryptosha;
 
+import ch.qos.logback.core.util.TimeUtil;
 import com.messenger.cryptosha.dto.ChatMessageDTO;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,11 +8,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.test.context.TestConstructor;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
@@ -26,6 +30,9 @@ import java.util.List;
 import java.util.concurrent.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(
+        locations = "classpath:application-test.properties"
+)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class WebSocketStompTest {
     @Value("${local.server.port}")
@@ -36,6 +43,19 @@ public class WebSocketStompTest {
 
     private CompletableFuture<ChatMessageDTO> completableFuture;
     private StompSession stompSession;
+
+    class MessageStompFrameHandler implements StompFrameHandler {
+
+        @Override
+        public Type getPayloadType(StompHeaders stompHeaders) {
+            return ChatMessageDTO.class;
+        }
+
+        @Override
+        public void handleFrame(StompHeaders stompHeaders, Object o) {
+            completableFuture.completeAsync(() -> (ChatMessageDTO) o);
+        }
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -64,19 +84,6 @@ public class WebSocketStompTest {
         ChatMessageDTO chatMessageDTO = completableFuture.get(5, TimeUnit.SECONDS);
 
         Assertions.assertEquals(testMessage, chatMessageDTO);
-    }
-
-    class MessageStompFrameHandler implements StompFrameHandler {
-
-        @Override
-        public Type getPayloadType(StompHeaders stompHeaders) {
-            return ChatMessageDTO.class;
-        }
-
-        @Override
-        public void handleFrame(StompHeaders stompHeaders, Object o) {
-            completableFuture.complete((ChatMessageDTO) o);
-        }
     }
 
     private List<Transport> createTransportClient() {

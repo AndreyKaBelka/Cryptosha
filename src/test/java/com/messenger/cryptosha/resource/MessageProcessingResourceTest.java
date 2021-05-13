@@ -10,11 +10,10 @@ import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.MockBeans;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -35,22 +34,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         locations = "classpath:application-test.properties"
 )
 @WebMvcTest(MessageProcessingResource.class)
+@MockBean({SimpMessagingTemplate.class, ChatNotificationService.class})
 public class MessageProcessingResourceTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private MessageProcessingService messageProcessingService;
-
-    /*
-    DONT REMOVE THIS UNUSED BEANS
-    BECAUSE IF YOU REMOVE IT, CONTEXT WILL CRUSH ON LOAD
-     */
-    @MockBean
-    private SimpMessagingTemplate simpMessagingTemplate;
-
-    @MockBean
-    private ChatNotificationService chatNotificationService;
 
     @MockBean
     private ChatService chatService;
