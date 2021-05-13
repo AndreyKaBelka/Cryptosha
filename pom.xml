@@ -18,8 +18,8 @@
     </properties>
     <repositories>
         <repository>
-            <id>crypto library rep</id>
-            <url>https://maven.pkg.github.com/AndreyKaBelka/Cryptography</url>
+            <id>com.andreyka</id>
+            <url>https://github.com/AndreyKaBelka?tab=packages&amp;repo_name=Cryptography</url>
         </repository>
     </repositories>
     <dependencies>
@@ -59,7 +59,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.andreyka</groupId>
             <artifactId>crypto</artifactId>
