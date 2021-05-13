@@ -14,6 +14,7 @@ import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,9 +31,6 @@ import java.util.List;
 import java.util.concurrent.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(
-        locations = "classpath:application-test.properties"
-)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class WebSocketStompTest {
     @Value("${local.server.port}")
