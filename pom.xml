@@ -16,16 +16,6 @@
     <properties>
         <java.version>11</java.version>
     </properties>
-    <repositories>
-        <repository>
-            <id>Cryptography-mvn-repo</id>
-            <url>https://github.com/AndreyKaBelka/Cryptography/raw/mvn-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

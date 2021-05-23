@@ -2,7 +2,7 @@
 //TODO: fix message send
 export default function MessageSend() {
     router.get('/message', (req, res) => {
-        res.render('chat', { bundle: '../js/MessageSend.js' });
+        res.render('chat', { bundle: '../js/MessageSend.jsx' });
     })
 
     router.post('/message', (req, res) => {

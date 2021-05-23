@@ -1,4 +1,4 @@
-const serverRequest = require("../utils/serverRequest");
+const serverRequest = require("../utils/serverRequest.jsx");
 const URI = require('urijs')
 
 const user = function (){};

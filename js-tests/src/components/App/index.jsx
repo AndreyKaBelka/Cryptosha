@@ -3,7 +3,7 @@ import ChatsList from "../ChatsList";
 import MessagesList from "../MessagesList";
 import './App.css';
 
-function getChatTitle(){
+function getChatTitle() {
     return "Mark";
 }
 
