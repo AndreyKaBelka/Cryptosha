@@ -68,7 +68,7 @@ module.exports = {
     output: {
         path: publicPath,
         filename: jsName,
-        publicPath: './'
+        publicPath: '/'
     },
     module: {
         rules: [
