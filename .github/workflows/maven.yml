@@ -31,10 +31,10 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: Compilation
-      run: mvn test-compile
+      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml test-compile
     - name: Unit Testing
-      run: mvn surefire:test
+      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml surefire:test
     - name: Packaging
-      run: mvn jar:jar
+      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml jar:jar
     - name: Integration Testing
-      run: mvn failsafe:integration-test
+      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml failsafe:integration-test
