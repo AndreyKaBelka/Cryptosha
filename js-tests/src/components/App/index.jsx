@@ -9,11 +9,11 @@ function getChatTitle() {
 
 export default function App(props) {
     return (<div className="messenger">
-        <div className="left-items">
+        <div className="leftItems">
             <ChatsList/>
         </div>
         {props.showMessages &&
-        <div className="right-items">
+        <div className="rightItems">
             <MessagesList title={getChatTitle()}/>
         </div>
         }

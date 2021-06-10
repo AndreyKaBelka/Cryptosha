@@ -9,7 +9,7 @@ body {
     background: rgba(109, 109, 173, 0.36);
 }
 
-code {
+.code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
@@ -21,3 +21,17 @@ code {
 *:focus {
     outline: none;
 }
+
+.leftItems {
+    background: #f8f8f8 none repeat scroll 0 0;
+    float: left;
+    overflow: hidden;
+    width: 40%; border-right:1px solid #c4c4c4;
+}
+
+.rightItems {
+    float: left;
+    padding: 30px 15px 0 25px;
+    width: 60%;
+}
+

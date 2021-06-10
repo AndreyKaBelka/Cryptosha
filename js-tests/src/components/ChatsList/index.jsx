@@ -5,7 +5,7 @@ import './ChatsList.css';
 const tempChats = [
     {
         chatTitle: "Mark Cucerberg",
-        chatMessage: "Hi buddy!"
+        chatMessage: "Hi there!"
     },
     {
         chatTitle: "Mark Cucerberg",
@@ -13,7 +13,7 @@ const tempChats = [
     },
     {
         chatTitle: "Mark Cucerberg",
-        chatMessage: "Hi buddy!"
+        chatMessage: "Hi man!"
     }
 ]
 
@@ -37,7 +37,7 @@ function getChats() {
     return tempChats;
 }
 
-export default function ChatsList(props) {
+export default function ChatsList() {
     return (
         <div className="chatsList">{renderChats()}</div>
     );

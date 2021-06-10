@@ -5,8 +5,9 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const publicPath = `http://localhost:${process.env.PORT || '3001'}/public/assets`;
+const publicPath = path.resolve(__dirname, `public`);
 const jsName = process.env.NODE_ENV === 'production' ? 'bundle-[hash].js' : 'bundle.js';
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -23,52 +24,69 @@ const plugins = [
     }),
     new webpack.LoaderOptionsPlugin({
         debug: true
+    }),
+    new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, "src/index.html"),
+        minify: false,
+        filename: 'index.html'
     })
 ];
 
 if (devMode) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
-}
-
-if (!devMode) {
+} else {
+    plugins.push(new DuplicatePackageCheckerPlugin());
     plugins.push(new CleanWebpackPlugin({
         dry: false,
         verbose: true,
-        cleanAfterEveryBuildPatterns: [__dirname + "/public/assets/"]
-    }))
-    plugins.push(new DuplicatePackageCheckerPlugin());
+        cleanOnceBeforeBuildPatterns: [publicPath]
+    }));
 }
 
 module.exports = {
-    entry: ['babel-polyfill', './src/client.js'],
+    entry: {
+        main: ["babel-polyfill", "./src/main/client"]
+    },
     resolve: {
-        roots: [path.join(__dirname, 'src')],
+        roots: [path.resolve(__dirname, 'src')],
         modules: ['node_modules'],
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx'],
+        fallback: {
+            "fs": false,
+            "tls": false,
+            "net": false,
+            "path": false,
+            "zlib": false,
+            "http": false,
+            "https": false,
+            "stream": false,
+            "crypto": false,
+            "crypto-browserify": require.resolve('crypto-browserify')
+        }
     },
     plugins,
     output: {
-        path: `${__dirname}/public/assets/`,
+        path: publicPath,
         filename: jsName,
-        publicPath
+        publicPath: './'
     },
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
+                use: [
+                    {loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader},
+                    {loader: 'css-loader'}
+                ]
             },
-            {test: /\.gif$/, use: 'url-loader?limit=10000&mimetype=image/gif'},
-            {test: /\.jpg$/, use: 'url-loader?limit=10000&mimetype=image/jpg'},
-            {test: /\.png$/, use: 'url-loader?limit=10000&mimetype=image/png'},
-            {test: /\.svg/, use: 'url-loader?limit=26000&mimetype=image/svg+xml'},
-            {test: /\.(woff|woff2|ttf|eot)/, use: 'url-loader?limit=1'},
-            { test: /\.jsx?$/, use: 'babel-loader', exclude: [/node_modules/, /public/]},
-            {test: /\.json$/, use: 'json-loader'},
+            {
+                test: /\.js[x]?$/,
+                use: 'babel-loader',
+                exclude: [/node_modules/]
+            },
         ]
     },
-    devtool: devMode ? 'source-map' : null,
     devServer: {
-        headers: {'Access-Control-Allow-Origin': '*'}
+        hot: true
     }
 };
