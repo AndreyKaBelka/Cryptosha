@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -22,12 +20,21 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Maven Install Packages
-      run: mvn install
+      run:  mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml -B dependency:go-offline --file pom.xml
+      env:
+        USER_NAME: ${{ secrets.USER_NAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
     - name: Cache Maven packages
       uses: actions/cache@v2
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-    - name: Unit Tests
-      run: mvn test
+    - name: Compilation
+      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml test-compile
+    - name: Unit Testing
+      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml surefire:test
+    - name: Packaging
+      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml jar:jar
+    - name: Integration Testing
+      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml failsafe:integration-test
