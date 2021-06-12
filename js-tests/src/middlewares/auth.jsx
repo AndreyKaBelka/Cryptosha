@@ -1,3 +1,7 @@
+import Cookies from "universal-cookie/lib";
+
+const cookies = new Cookies();
+
 export default function isAuthenticated() {
-    return !!document.cookie.userId;
+    return !!cookies.get('userId');
 }

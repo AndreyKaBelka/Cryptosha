@@ -4,6 +4,9 @@ import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import Home from "../Home";
 import Login from "../Login";
 import isAuthenticated from "../../middlewares/auth";
+import Registration from "../Registration";
+import Registered from "../Registration/Registered";
+import Unregistered from "../Registration/Unregistered";
 
 class App extends Component {
     render() {
@@ -17,8 +20,11 @@ class App extends Component {
                     )
                     : (
                         <Switch>
-                            <Route path='/login' component={Login}/>
-                            <Redirect from='*' to='/login'/>
+                            <Route exact path='/login' component={Login}/>
+                            <Route exact path='/registration' component={Registration}/>
+                            <Route path='/registration/fail' component={Unregistered}/>
+                            <Route path='/registration/success' component={Registered}/>
+                            <Redirect from='/' to='/registration'/>
                         </Switch>
                     )}
             </div>
