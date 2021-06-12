@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import Chat from "../Chat";
 import './ChatsList.css';
 
@@ -37,8 +37,10 @@ function getChats() {
     return tempChats;
 }
 
-export default function ChatsList() {
-    return (
-        <div className="chatsList">{renderChats()}</div>
-    );
+export default class ChatsList extends Component {
+    render() {
+        return (
+            <div className="chatsList leftItems">{renderChats()}</div>
+        );
+    }
 }

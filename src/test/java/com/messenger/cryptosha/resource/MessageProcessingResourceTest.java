@@ -1,11 +1,11 @@
 package com.messenger.cryptosha.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.messenger.cryptosha.NotFoundException;
 import com.messenger.cryptosha.dto.ChatMessageDTO;
 import com.messenger.cryptosha.service.ChatNotificationService;
 import com.messenger.cryptosha.service.ChatService;
 import com.messenger.cryptosha.service.MessageProcessingService;
-import javassist.NotFoundException;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;

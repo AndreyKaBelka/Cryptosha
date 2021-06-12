@@ -1,4 +1,4 @@
-const fetch = require('node-fetch')
+import fetch from "node-fetch";
 
 export default async function serverRequest(url, opts) {
     opts.body = JSON.stringify(opts.body)

@@ -1,10 +1,10 @@
 package com.messenger.cryptosha.resource;
 
+import com.messenger.cryptosha.NotFoundException;
 import com.messenger.cryptosha.dto.ChatMessageDTO;
 import com.messenger.cryptosha.service.ChatNotificationService;
 import com.messenger.cryptosha.service.ChatService;
 import com.messenger.cryptosha.service.MessageProcessingService;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;

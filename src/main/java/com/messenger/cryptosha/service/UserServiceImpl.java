@@ -1,10 +1,10 @@
 package com.messenger.cryptosha.service;
 
 import com.messenger.cryptosha.ChatTransformer;
+import com.messenger.cryptosha.NotFoundException;
 import com.messenger.cryptosha.dto.UserDTO;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.persistence.UserPersistence;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

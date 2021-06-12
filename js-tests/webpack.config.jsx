@@ -1,5 +1,3 @@
-global.Promise = require('bluebird');
-
 const webpack = require('webpack');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -12,23 +10,19 @@ const jsName = process.env.NODE_ENV === 'production' ? 'bundle-[hash].js' : 'bun
 const devMode = process.env.NODE_ENV !== 'production';
 
 const plugins = [
-    new webpack.DefinePlugin({
-        'process.env': {
-            BROWSER: JSON.stringify(true),
-            NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
-        }
-    }),
     new MiniCssExtractPlugin({
         filename: devMode ? '[name].css' : '[name].[contenthash].css',
         chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
-    }),
-    new webpack.LoaderOptionsPlugin({
-        debug: true
     }),
     new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "src/index.html"),
         minify: false,
         filename: 'index.html'
+    }),
+    new CleanWebpackPlugin({
+        dry: true,
+        verbose: true,
+        cleanAfterEveryBuildPatterns: [publicPath]
     })
 ];
 
@@ -36,16 +30,11 @@ if (devMode) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
 } else {
     plugins.push(new DuplicatePackageCheckerPlugin());
-    plugins.push(new CleanWebpackPlugin({
-        dry: false,
-        verbose: true,
-        cleanOnceBeforeBuildPatterns: [publicPath]
-    }));
 }
 
 module.exports = {
     entry: {
-        main: ["babel-polyfill", "./src/main/client"]
+        main: ["./src/main/client"]
     },
     resolve: {
         roots: [path.resolve(__dirname, 'src')],
@@ -67,8 +56,7 @@ module.exports = {
     plugins,
     output: {
         path: publicPath,
-        filename: jsName,
-        publicPath: '/'
+        filename: jsName
     },
     module: {
         rules: [
@@ -87,6 +75,6 @@ module.exports = {
         ]
     },
     devServer: {
-        hot: true
+        historyApiFallback: true,
     }
 };

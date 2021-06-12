@@ -2,20 +2,18 @@ package com.messenger.cryptosha.service;
 
 import com.andreyka.crypto.KeyPair;
 import com.messenger.cryptosha.ChatTransformer;
+import com.messenger.cryptosha.NotFoundException;
 import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.dto.UserDTO;
 import com.messenger.cryptosha.model.ChatModel;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.persistence.ChatPersistence;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.management.OperationsException;
-import java.util.Arrays;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service

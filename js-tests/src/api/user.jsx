@@ -1,18 +1,13 @@
-const serverRequest = require("../utils/serverRequest.jsx");
-const URI = require('urijs')
+import serverRequest from "../utils/serverRequest.jsx";
+import URI from 'urijs';
 
-const user = function (){};
-
-user.prototype.getUser = async () => {
-    const userId = 1; //TODO: get userId
-    const response = await serverRequest(URI('/user').search({userId}).toString(), {
+export async function getUser(userId) {
+    return await serverRequest(URI('/user').search({userId}).toString(), {
         method: 'GET'
-    })
-    console.log(response)
-    return response;
+    });
 }
 
-user.prototype.createUser = async (username) => {
+export async function createUser(username) {
     const publicKey = generatePublicKey();
     await serverRequest('/user', {
         method: 'POST',
@@ -22,9 +17,8 @@ user.prototype.createUser = async (username) => {
         }
     }).then(data => {
         if (data.id) {
-           //TODO: save user id
-        }
-        else {
+            //TODO: save user id
+        } else {
             return undefined;
         }
     })
@@ -33,5 +27,3 @@ user.prototype.createUser = async (username) => {
 function generatePublicKey() {
     return "{0;0}"
 }
-
-export default user;
