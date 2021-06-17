@@ -1,28 +1,44 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import Cookies from "universal-cookie/lib";
+import * as bcryptjs from 'bcryptjs';
+
 const cookies = new Cookies();
 
 class Registration extends Component {
     constructor(props) {
         super(props);
-        this.onRegisterBtnClick = this.onRegisterBtnClick.bind(this);
+        this.state = {
+            username: '',
+            password: ''
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    onRegisterBtnClick(event) {
-        const username = $("#username").val();
-        this.props.history.push('/registration/success');
+    handleSubmit(event) {
+        event.preventDefault();
+        const salt = bcryptjs.genSaltSync(10);
+        const passwordHash = bcryptjs.hashSync(this.state.password, salt);
+        const reqBody = {
+            ...this.state,
+            password: passwordHash
+        };
+        console.log(reqBody);
     }
 
     render() {
         return (
-            <div>
+            <form onSubmit={this.handleSubmit}>
                 <div>
-                    <input type='text' id='username' value="Username"/>
-                    <input type='text' id='password' value="Password"/>
-                    <button onClick={this.onRegisterBtnClick} id='Register'>Register</button>
+                    <label htmlFor='username'>Username</label>
+                    <input type='username' id='username' value={this.state.username} onChange={(e) => this.setState({username: e.target.value})} />
                 </div>
-            </div>
+                <div>
+                    <label htmlFor='password'>Password</label>
+                    <input type='password' id='password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} />
+                </div>
+                <button>Register</button>
+            </form>
         );
     }
 }

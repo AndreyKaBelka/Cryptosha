@@ -50,7 +50,8 @@ module.exports = {
             "https": false,
             "stream": false,
             "crypto": false,
-            "crypto-browserify": require.resolve('crypto-browserify')
+            "crypto-browserify": require.resolve('crypto-browserify'),
+            "bcryptjs": require.resolve("bcryptjs")
         }
     },
     plugins,
