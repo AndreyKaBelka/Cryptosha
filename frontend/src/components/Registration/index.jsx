@@ -11,8 +11,6 @@ class Registration extends Component {
 
     onRegisterBtnClick(event) {
         const username = $("#username").val();
-        console.log(username);
-        cookies.set('userId', 12);
         this.props.history.push('/registration/success');
     }
 
@@ -20,7 +18,8 @@ class Registration extends Component {
         return (
             <div>
                 <div>
-                    <input type='text' id='username'/>
+                    <input type='text' id='username' value="Username"/>
+                    <input type='text' id='password' value="Password"/>
                     <button onClick={this.onRegisterBtnClick} id='Register'>Register</button>
                 </div>
             </div>

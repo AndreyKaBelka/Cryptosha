@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd ../js-tests
+cd ../frontend
 yarn start
