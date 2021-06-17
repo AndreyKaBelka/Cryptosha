@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd ../target
+java -jar ./cryptosha-0.0.1-SNAPSHOT.jar
