@@ -44,6 +44,8 @@
     "@babel/preset-react": "^7.13.13",
     "@babel/register": "^7.13.16",
     "babel-loader": "^8.2.2",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "concurrently": "^6.2.0",
     "css-loader": "^5.2.5",

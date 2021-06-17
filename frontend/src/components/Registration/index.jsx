@@ -15,10 +15,10 @@ class Registration extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
-        const salt = bcryptjs.genSaltSync(10);
-        const passwordHash = bcryptjs.hashSync(this.state.password, salt);
+        const salt = await bcryptjs.genSalt(10);
+        const passwordHash = await bcryptjs.hash(this.state.password, salt);
         const reqBody = {
             ...this.state,
             password: passwordHash
