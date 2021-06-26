@@ -5,6 +5,7 @@ import com.messenger.cryptosha.ChatTransformer;
 import com.messenger.cryptosha.NotFoundException;
 import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.dto.UserDTO;
+import com.messenger.cryptosha.exceptions.ChatCreationException;
 import com.messenger.cryptosha.model.ChatModel;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.persistence.ChatPersistence;
@@ -30,12 +31,12 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public ChatDTO createChat(String chatName) throws OperationsException {
+    public ChatDTO createChat(String chatName) {
         KeyPair chatKeyPair;
         try {
-            chatKeyPair = KeyPair.generateKeyPair();
+            chatKeyPair = new KeyPair();
         } catch (CloneNotSupportedException e) {
-            throw new OperationsException("Something went wrong!");
+            throw new ChatCreationException();
         }
         return chatTransformer.mapToDTO(chatPersistence.createChat(chatName, chatKeyPair));
     }

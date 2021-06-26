@@ -4,6 +4,11 @@
       "name": "spring.datasource.h2.console.enabled",
       "type": "java.lang.String",
       "description": "Description for spring.datasource.h2.console.enabled."
+    },
+    {
+      "name": "management.security.enabled",
+      "type": "java.lang.String",
+      "description": "Description for management.security.enabled."
     }
   ]
 }
