@@ -1,4 +1,4 @@
-package com.messenger.cryptosha;
+package com.messenger.cryptosha.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

@@ -14,6 +14,7 @@ public class UserModel {
     @GeneratedValue(generator = "generator")
     private Long userId;
     private String username;
+    private String passwordHash;
 
     @ManyToMany(mappedBy = "users")
     private Set<ChatModel> chats = new HashSet<>();
@@ -40,5 +41,13 @@ public class UserModel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 }
