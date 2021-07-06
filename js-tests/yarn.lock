@@ -4385,10 +4385,10 @@ node-modules-regexp@^1.0.0:
   resolved "https://registry.yarnpkg.com/node-modules-regexp/-/node-modules-regexp-1.0.0.tgz#8d9dbe28964a4ac5712e9131642107c71e90ec40"
   integrity sha1-jZ2+KJZKSsVxLpExZCEHxx6Q7EA=
 
-node-polyfill-webpack-plugin@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/node-polyfill-webpack-plugin/-/node-polyfill-webpack-plugin-1.1.2.tgz#3e8e8640a920b566d5842df84f1c8c077554250e"
-  integrity sha512-ubwf7M73V13RDlKaDmMh1+giB/D8KL75umXEGabGtxSt/WRCirl01urhK1qsr6Cdt77escQ9SNb5OoTR8IwEHg==
+node-polyfill-webpack-plugin@^1.1.3:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/node-polyfill-webpack-plugin/-/node-polyfill-webpack-plugin-1.1.4.tgz#56bfa4d16e17addb9d6b1ef3d04e790c401f5f1d"
+  integrity sha512-Z0XTKj1wRWO8o/Vjobsw5iOJCN+Sua3EZEUc2Ziy9CyVvmHKu6o+t4gUH9GOE0czyPR94LI6ZCV/PpcM8b5yow==
   dependencies:
     assert "^2.0.0"
     browserify-zlib "^0.2.0"
@@ -4412,7 +4412,7 @@ node-polyfill-webpack-plugin@^1.1.2:
     timers-browserify "^2.0.12"
     tty-browserify "^0.0.1"
     url "^0.11.0"
-    util "^0.12.3"
+    util "^0.12.4"
     vm-browserify "^1.1.2"
 
 node-releases@^1.1.71:
@@ -6236,7 +6236,7 @@ util@^0.10.3:
   dependencies:
     inherits "2.0.3"
 
-util@^0.12.0, util@^0.12.3:
+util@^0.12.0, util@^0.12.4:
   version "0.12.4"
   resolved "https://registry.yarnpkg.com/util/-/util-0.12.4.tgz#66121a31420df8f01ca0c464be15dfa1d1850253"
   integrity sha512-bxZ9qtSlGUWSOy9Qa9Xgk11kSslpuZwaxCg4sNIDj6FLucDab2JxnHwyNTCpHMtK1MjoQiWQ6DiUMZYbSrO+Sw==
