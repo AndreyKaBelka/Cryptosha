@@ -23,7 +23,7 @@
     "stream": "0.0.2",
     "urijs": "^1.19.7",
     "with": "^7.0.2",
-    "yarn": "^1.22.10"
+    "yarn": "^1.22.11"
   },
   "browserslist": {
     "production": [
