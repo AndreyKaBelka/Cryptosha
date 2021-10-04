@@ -18,6 +18,8 @@
         <frontend-src-dir>${project.basedir}/js-tests</frontend-src-dir>
         <node.version>v14.16.1</node.version>
         <yarn.version>v1.22.10</yarn.version>
+        <sonar.organization>andreykabelka</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencies>
         <dependency>
