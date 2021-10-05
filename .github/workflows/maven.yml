@@ -25,17 +25,17 @@ jobs:
         path: ~/.sonar/cache
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
-    - name: Maven Install Packages
-      run:  mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml --file pom.xml install
-      env:
-        USER_NAME: ${{ secrets.USER_NAME }}
-        PASSWORD: ${{ secrets.PASSWORD }}
     - name: Cache Maven packages
       uses: actions/cache@v2
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
+    - name: Maven Install Packages
+      run:  mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml --file pom.xml install
+      env:
+        USER_NAME: ${{ secrets.USER_NAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
