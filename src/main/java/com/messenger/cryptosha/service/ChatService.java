@@ -1,6 +1,6 @@
 package com.messenger.cryptosha.service;
 
-import com.messenger.cryptosha.NotFoundException;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.dto.ChatDTO;
 
 import javax.management.OperationsException;

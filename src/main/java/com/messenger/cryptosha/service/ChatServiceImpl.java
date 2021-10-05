@@ -1,11 +1,10 @@
 package com.messenger.cryptosha.service;
 
-import com.andreyka.crypto.KeyPair;
+import com.andreyka.crypto.api.KeyPair;
 import com.messenger.cryptosha.ChatTransformer;
-import com.messenger.cryptosha.NotFoundException;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.dto.UserDTO;
-import com.messenger.cryptosha.exceptions.ChatCreationException;
 import com.messenger.cryptosha.model.ChatModel;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.persistence.ChatPersistence;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.OperationsException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,12 +30,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ChatDTO createChat(String chatName) {
-        KeyPair chatKeyPair;
-        try {
-            chatKeyPair = new KeyPair();
-        } catch (CloneNotSupportedException e) {
-            throw new ChatCreationException();
-        }
+        KeyPair chatKeyPair = new KeyPair();
         return chatTransformer.mapToDTO(chatPersistence.createChat(chatName, chatKeyPair));
     }
 

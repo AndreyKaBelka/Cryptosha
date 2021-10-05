@@ -1,8 +1,7 @@
 package com.messenger.cryptosha.dto;
 
-import com.andreyka.crypto.ECPoint;
+import com.andreyka.crypto.api.ECPoint;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.messenger.cryptosha.model.UserModel;
 
 import java.util.Set;
 

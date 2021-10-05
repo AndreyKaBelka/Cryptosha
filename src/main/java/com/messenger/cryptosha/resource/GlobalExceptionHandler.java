@@ -1,7 +1,5 @@
 package com.messenger.cryptosha.resource;
 
-import com.messenger.cryptosha.exceptions.ChatCreationException;
-import com.messenger.cryptosha.exceptions.UserNotFoundException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.security.web.csrf.InvalidCsrfTokenException;

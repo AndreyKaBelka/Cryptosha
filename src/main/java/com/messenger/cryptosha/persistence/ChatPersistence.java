@@ -1,15 +1,12 @@
 package com.messenger.cryptosha.persistence;
 
-import com.andreyka.crypto.KeyPair;
+import com.andreyka.crypto.api.KeyPair;
 import com.messenger.cryptosha.model.ChatModel;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.repository.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service

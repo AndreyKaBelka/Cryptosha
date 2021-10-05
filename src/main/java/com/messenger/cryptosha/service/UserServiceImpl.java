@@ -1,14 +1,13 @@
 package com.messenger.cryptosha.service;
 
 import com.messenger.cryptosha.ChatTransformer;
-import com.messenger.cryptosha.NotFoundException;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.dto.UserDTO;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.persistence.UserPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 

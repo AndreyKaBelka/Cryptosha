@@ -1,6 +1,6 @@
 package com.messenger.cryptosha.resource;
 
-import com.messenger.cryptosha.NotFoundException;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
