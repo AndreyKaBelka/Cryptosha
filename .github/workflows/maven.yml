@@ -19,8 +19,14 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
     - name: Maven Install Packages
-      run:  mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml -B dependency:go-offline --file pom.xml
+      run:  mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml --file pom.xml install
       env:
         USER_NAME: ${{ secrets.USER_NAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
@@ -30,11 +36,8 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-    - name: Compilation
-      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml test-compile
-    - name: Unit Testing
-      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml surefire:test
-    - name: Packaging
-      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml jar:jar
-    - name: Integration Testing
-      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml failsafe:integration-test
+    - name: Build and analyze
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AndreyKaBelka_Cryptosha

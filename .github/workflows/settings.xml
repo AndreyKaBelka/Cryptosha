@@ -7,44 +7,28 @@
         <server>
             <username>${env.USER_NAME}</username>
             <password>${env.PASSWORD}</password>
-            <id>central-jfrog</id>
+            <id>central</id>
         </server>
         <server>
             <username>${env.USER_NAME}</username>
             <password>${env.PASSWORD}</password>
-            <id>snapshots-jfrog</id>
+            <id>snapshots</id>
         </server>
     </servers>
     <profiles>
-        <profile>
-            <id>github</id>
-            <repositories>
-                <repository>
-                    <id>central</id>
-                    <url>https://repo.maven.apache.org/maven2</url>
-                </repository>
-                <repository>
-                    <id>github</id>
-                    <url>https://maven.pkg.github.com/AndreyKaBelka/*</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-        </profile>
         <profile>
             <repositories>
                 <repository>
                     <snapshots>
                         <enabled>false</enabled>
                     </snapshots>
-                    <id>central-jfrog</id>
+                    <id>central</id>
                     <name>default-maven-virtual</name>
                     <url>https://andreyka.jfrog.io/artifactory/default-maven-virtual</url>
                 </repository>
                 <repository>
                     <snapshots/>
-                    <id>snapshots-jfrog</id>
+                    <id>snapshots</id>
                     <name>default-maven-virtual</name>
                     <url>https://andreyka.jfrog.io/artifactory/default-maven-virtual</url>
                 </repository>
@@ -54,13 +38,13 @@
                     <snapshots>
                         <enabled>false</enabled>
                     </snapshots>
-                    <id>central-jfrog</id>
+                    <id>central</id>
                     <name>default-maven-virtual</name>
                     <url>https://andreyka.jfrog.io/artifactory/default-maven-virtual</url>
                 </pluginRepository>
                 <pluginRepository>
                     <snapshots/>
-                    <id>snapshots-jfrog</id>
+                    <id>snapshots</id>
                     <name>default-maven-virtual</name>
                     <url>https://andreyka.jfrog.io/artifactory/default-maven-virtual</url>
                 </pluginRepository>
