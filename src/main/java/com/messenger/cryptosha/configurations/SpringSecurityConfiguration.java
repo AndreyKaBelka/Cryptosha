@@ -43,7 +43,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> resolver.resolveException(httpServletRequest, httpServletResponse, null, e))
                     .and()
-                .csrf().disable()
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()

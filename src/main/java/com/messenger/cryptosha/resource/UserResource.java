@@ -25,6 +25,7 @@ public class UserResource {
     public ResponseEntity<Map<String, Object>> createUser(@RequestBody Map<String, String> json, HttpServletResponse response) {
         UserDTO userDTO = userService.createUser(json.get("username"), json.get("passwordHash"));
         Cookie userIdCookie = new Cookie("userId", userDTO.getId().toString());
+        userIdCookie.setHttpOnly(true);
         userIdCookie.setMaxAge(7 * 24 * 60 * 60);
         response.addCookie(userIdCookie);
         return ResponseEntity.ok().build();
