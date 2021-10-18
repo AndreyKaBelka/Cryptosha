@@ -39,12 +39,8 @@ jobs:
         USER_NAME: ${{ secrets.USER_NAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
     - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        projectBaseDir: Cryptosha
-        args: >
-          -Dsonar.projectKey=AndreyKaBelka_Cryptosha
-          -Dsonar.coverage.jacoco.xmlReportPaths=${project.build.directory}/site/jacoco/jacoco.xml 
+      run: mvn -B sonar:sonar -Dsonar.projectKey=AndreyKaBelka_Cryptosha -Dsonar.coverage.jacoco.xmlReportPaths=${project.build.directory}/site/jacoco/jacoco.xml
+
