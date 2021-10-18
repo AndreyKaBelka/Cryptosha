@@ -34,7 +34,10 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: Build
-      run: mvn -B package -s $GITHUB_WORKSPACE/.github/workflows/settings.xml
+      run: mvn -s $GITHUB_WORKSPACE/.github/workflows/settings.xml -B package
+      env:
+        USER_NAME: ${{ secrets.USER_NAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       env:
