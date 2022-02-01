@@ -35,3 +35,5 @@ build/
 /js-tests/node_modules/
 /js-tests/package-lock.json
 /js-tests/public/
+/.java-version
+/.gradle/

@@ -1,10 +1,9 @@
 package com.messenger.cryptosha.service;
 
-import com.andreyka.crypto.KeyPair;
+import com.andreyka.crypto.api.KeyPair;
 import com.messenger.cryptosha.ChatTransformer;
 import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.dto.UserDTO;
-import com.messenger.cryptosha.exceptions.ChatCreationException;
 import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.model.ChatModel;
 import com.messenger.cryptosha.model.UserModel;
@@ -31,13 +30,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ChatDTO createChat(String chatName) {
-        KeyPair chatKeyPair;
-        try {
-            chatKeyPair = new KeyPair();
-        } catch (CloneNotSupportedException e) {
-            throw new ChatCreationException();
-        }
-        return chatTransformer.mapToDTO(chatPersistence.createChat(chatName, chatKeyPair));
+        return chatTransformer.mapToDTO(chatPersistence.createChat(chatName, new KeyPair()));
     }
 
     @Override
@@ -59,7 +52,7 @@ public class ChatServiceImpl implements ChatService {
     public boolean isUserConnected(Long chatId, Long userId) throws NotFoundException {
         UserDTO userDTO = userService.getUserById(userId);
         ChatDTO chatDTO = getChatById(chatId);
-        return userDTO.getChats().stream().anyMatch(id -> chatDTO.getId().equals(id));
+        return userDTO.getChatsId().stream().anyMatch(id -> chatDTO.getId().equals(id));
     }
 
     @Transactional
@@ -67,18 +60,18 @@ public class ChatServiceImpl implements ChatService {
     public Long[] getChatUserIds(Long chatId) {
         ChatModel chatModel = chatPersistence.getChatById(chatId);
         return chatModel
-                .getUsers()
-                .stream()
-                .map(UserModel::getUserId)
-                .toArray(Long[]::new);
+            .getUsers()
+            .stream()
+            .map(UserModel::getUserId)
+            .toArray(Long[]::new);
     }
 
     @Override
     public Set<ChatDTO> getAllChatsForUser(Long userId) {
         return chatPersistence.getAllChatsForUser(userId)
-                .stream()
-                .map(chatTransformer::mapToMinDTO)
-                .collect(Collectors.toSet());
+            .stream()
+            .map(chatTransformer::mapToMinDTO)
+            .collect(Collectors.toSet());
     }
 
 }

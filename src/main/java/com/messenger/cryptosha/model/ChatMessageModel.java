@@ -1,5 +1,8 @@
 package com.messenger.cryptosha.model;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -10,6 +13,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "chat_message")
+@Data
 public class ChatMessageModel {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -20,44 +24,4 @@ public class ChatMessageModel {
     private String content;
     private Date timestamp;
 
-
-    public int getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
-    }
-
-    public Long getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(Long chatId) {
-        this.chatId = chatId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

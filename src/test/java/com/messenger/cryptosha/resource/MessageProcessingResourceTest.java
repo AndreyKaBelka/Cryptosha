@@ -1,22 +1,19 @@
 package com.messenger.cryptosha.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.messenger.cryptosha.exceptions.NotFoundException;
+import com.messenger.cryptosha.configuration.SpringSecurityTestConfiguration;
 import com.messenger.cryptosha.dto.ChatMessageDTO;
-import com.messenger.cryptosha.service.ChatNotificationService;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.service.ChatService;
 import com.messenger.cryptosha.service.MessageProcessingService;
 import org.assertj.core.util.Lists;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -29,29 +26,24 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(
-        locations = "classpath:application-test.properties"
+    locations = "classpath:application-test.properties"
 )
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@WebMvcTest(MessageProcessingResource.class)
-@MockBean({SimpMessagingTemplate.class, ChatNotificationService.class})
+@SpringBootTest(classes = SpringSecurityTestConfiguration.class)
+@AutoConfigureMockMvc
 public class MessageProcessingResourceTest {
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private MessageProcessingService messageProcessingService;
-
-    @MockBean
-    private ChatService chatService;
-
-    private ObjectMapper objectMapper;
-    private ChatMessageDTO[] dtos;
     private static final Long CHAT_ID = 123L;
     private static final Integer USER_ID = 456;
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private MessageProcessingService messageProcessingService;
+    @MockBean
+    private ChatService chatService;
+    private ObjectMapper objectMapper;
+    private ChatMessageDTO[] dtos;
 
-    @Before
+    @BeforeEach
     public void setUp() throws NotFoundException {
         objectMapper = new ObjectMapper();
         dtos = new ChatMessageDTO[2];
@@ -75,8 +67,8 @@ public class MessageProcessingResourceTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/getMessages")
                 .param("chatId", String.valueOf(CHAT_ID))
                 .cookie(new Cookie("userId", String.valueOf(USER_ID))))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(Lists.list(dtos))));
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(Lists.list(dtos))));
     }
 
     @Test
@@ -84,7 +76,7 @@ public class MessageProcessingResourceTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/getMessages")
                 .param("chatId", "3")
                 .cookie(new Cookie("userId", String.valueOf(USER_ID))))
-                .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -92,6 +84,6 @@ public class MessageProcessingResourceTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/getMessages")
                 .param("chatId", String.valueOf(CHAT_ID))
                 .cookie(new Cookie("userId", "2")))
-                .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest());
     }
 }

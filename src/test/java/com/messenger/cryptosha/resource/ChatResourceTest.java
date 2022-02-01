@@ -1,20 +1,18 @@
 package com.messenger.cryptosha.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.messenger.cryptosha.exceptions.NotFoundException;
+import com.messenger.cryptosha.configuration.SpringSecurityTestConfiguration;
 import com.messenger.cryptosha.dto.ChatDTO;
-import com.messenger.cryptosha.dto.UserDTO;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.service.ChatService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -27,37 +25,28 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(
-        locations = "classpath:application-test.properties"
+    locations = "classpath:application-test.properties"
 )
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@WebMvcTest(ChatResource.class)
+@SpringBootTest(classes = SpringSecurityTestConfiguration.class)
+@AutoConfigureMockMvc
 class ChatResourceTest {
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private ChatService chatService;
-    private ObjectMapper objectMapper;
-
-    private ChatDTO[] chats;
-    private UserDTO user;
     private static final String CHAT_NAME1 = "TESTNAME";
     private static final String CHAT_NAME2 = "TESTNAME2";
     private static final String CHAT_PUB = "{0;0}";
     private static final Long CHAT_ID = 1L;
     private static final Long USER_ID = 1L;
-    private static final String USER_NAME = "TESTUSER";
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private ChatService chatService;
+    private ObjectMapper objectMapper;
+    private ChatDTO[] chats;
 
     @BeforeEach
     void setUp() throws NotFoundException {
         objectMapper = new ObjectMapper();
         chats = new ChatDTO[2];
-        user = new UserDTO();
-        user.setId(USER_ID);
-        user.setUsername(USER_NAME);
-        user.setChats(Collections.singleton(CHAT_ID));
 
         ChatDTO chat = new ChatDTO();
         chat.setId(CHAT_ID);
@@ -87,8 +76,8 @@ class ChatResourceTest {
                 .param("chatId", String.valueOf(CHAT_ID))
                 .cookie(new Cookie("userId", USER_ID.toString()))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(chats[0])));
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(chats[0])));
     }
 
     @Test
@@ -97,7 +86,7 @@ class ChatResourceTest {
                 .param("chatId", String.valueOf(2L))
                 .cookie(new Cookie("userId", USER_ID.toString()))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -105,9 +94,9 @@ class ChatResourceTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/chat/all")
                 .cookie(new Cookie("userId", USER_ID.toString()))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(chats))));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(2)))
+            .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(chats))));
     }
 
     @Test
@@ -115,7 +104,7 @@ class ChatResourceTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/chat/all")
                 .cookie(new Cookie("userId", "2"))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(0)));
     }
 }

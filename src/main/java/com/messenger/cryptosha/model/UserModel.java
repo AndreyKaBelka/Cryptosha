@@ -1,5 +1,8 @@
 package com.messenger.cryptosha.model;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@Data
 public class UserModel {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -19,35 +23,4 @@ public class UserModel {
     @ManyToMany(mappedBy = "users")
     private Set<ChatModel> chats = new HashSet<>();
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Set<ChatModel> getChats() {
-        return chats;
-    }
-
-    public void setChats(Set<ChatModel> chats) {
-        this.chats = chats;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
 }

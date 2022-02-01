@@ -1,6 +1,6 @@
 package com.messenger.cryptosha.persistence;
 
-import com.andreyka.crypto.KeyPair;
+import com.andreyka.crypto.api.KeyPair;
 import com.messenger.cryptosha.model.ChatModel;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.repository.ChatRepository;
@@ -33,7 +33,7 @@ public class ChatPersistence {
     }
 
     public ChatModel getChatById(Long chatId) {
-        return chatRepository.getOne(chatId);
+        return chatRepository.getById(chatId);
     }
 
     public List<ChatModel> getAllChatsForUser(Long userId) {
