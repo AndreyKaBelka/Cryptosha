@@ -1,8 +1,9 @@
 package com.messenger.cryptosha.service;
 
 import com.messenger.cryptosha.ChatTransformer;
-import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.dto.UserDTO;
+import com.messenger.cryptosha.exceptions.InvalidJwtAuthenticationException;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.persistence.UserPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserModel getByUsername(String username) {
+        if (username == null || username.isEmpty())
+            throw new InvalidJwtAuthenticationException("JWT token doesn't contain username field");
         return userPersistence.getUserByUsername(username);
     }
 }

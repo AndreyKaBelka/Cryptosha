@@ -41,7 +41,7 @@ public class MessageProcessingServiceImpl implements MessageProcessingService {
     public List<ChatMessageDTO> getUnreadMessagesForUserAndChat(Long userId, Long chatId) {
         List<ChatNotificationDTO> notifications = notificationService.getNotificationsForUserAndChat(userId, chatId);
         List<ChatMessageDTO> messages = new ArrayList<>();
-        for (ChatNotificationDTO notification: notifications) {
+        for (ChatNotificationDTO notification : notifications) {
             messages.add(mapToDTO(chatMessagePersistence.getById(notification.getMessageId())));
         }
         return messages;

@@ -1,7 +1,7 @@
 package com.messenger.cryptosha.resource;
 
-import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.dto.UserDTO;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,6 @@ public class UserResource {
     public ResponseEntity<Map<String, Object>> createUser(@RequestBody Map<String, String> json, HttpServletResponse response) {
         UserDTO userDTO = userService.createUser(json.get("username"), json.get("passwordHash"));
         Cookie userIdCookie = new Cookie("userId", userDTO.getId().toString());
-        userIdCookie.setHttpOnly(true);
         userIdCookie.setMaxAge(7 * 24 * 60 * 60);
         response.addCookie(userIdCookie);
         return ResponseEntity.ok().build();

@@ -33,7 +33,7 @@ public class ChatPersistence {
     }
 
     public ChatModel getChatById(Long chatId) {
-        return chatRepository.getOne(chatId);
+        return chatRepository.getById(chatId);
     }
 
     public List<ChatModel> getAllChatsForUser(Long userId) {

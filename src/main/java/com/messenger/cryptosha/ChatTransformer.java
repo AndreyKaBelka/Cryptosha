@@ -31,7 +31,7 @@ public class ChatTransformer {
                 .stream()
                 .map(ChatModel::getChatId)
                 .collect(Collectors.toSet());
-        userDTO.setChats(chatsId);
+        userDTO.setChatsId(chatsId);
         userDTO.setId(userModel.getUserId());
         return userDTO;
     }
@@ -41,7 +41,7 @@ public class ChatTransformer {
         userModel.setUsername(userDTO.getUsername());
         userModel.setUserId(userDTO.getId());
         Set<ChatModel> chatModels = userDTO
-                .getChats()
+                .getChatsId()
                 .stream()
                 .map(chatPersistence::getChatById)
                 .collect(Collectors.toSet());

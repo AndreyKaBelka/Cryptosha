@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+group = 'com.messenger'
+version = '0.0.1-SNAPSHOT'
+
+description = """cryptosha"""
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.3'
+    implementation 'org.springframework:spring-orm:5.3.15'
+    implementation 'org.hibernate:hibernate-core:5.6.4.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.3'
+    implementation 'com.h2database:h2:2.1.210'
+    implementation 'org.jetbrains:annotations:23.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:2.6.3'
+    implementation 'org.springframework.boot:spring-boot-starter-security:2.6.3'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
+
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    implementation 'com.andreyka:crypto:1.2'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.6.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+test {
+    useJUnitPlatform()
+}

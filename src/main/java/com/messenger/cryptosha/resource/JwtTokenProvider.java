@@ -48,7 +48,7 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String getUsername(String token) {
+    private String getUsername(String token) {
         String tokenOnly = token.substring(0, token.lastIndexOf('.') + 1);
         return Jwts.parser().parseClaimsJwt(tokenOnly).getBody().getIssuer();
     }
