@@ -1,7 +1,7 @@
 package com.messenger.cryptosha.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.messenger.cryptosha.NotFoundException;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.dto.ChatDTO;
 import com.messenger.cryptosha.dto.UserDTO;
 import com.messenger.cryptosha.service.ChatService;

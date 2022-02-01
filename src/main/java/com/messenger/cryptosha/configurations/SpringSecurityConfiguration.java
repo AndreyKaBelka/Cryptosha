@@ -26,12 +26,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.resolver = resolver;
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManager();
-    }
-
     @SuppressWarnings("deprecation")
     @Bean
     public static NoOpPasswordEncoder passwordEncoder() {
@@ -39,19 +33,25 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManager();
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> resolver.resolveException(httpServletRequest, httpServletResponse, null, e))
-                    .and()
+                .and()
                 .csrf().disable()
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/user").permitAll()
-                    .antMatchers("/auth/login").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
+                .antMatchers(HttpMethod.POST, "/user").permitAll()
+                .antMatchers("/auth/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .apply(new JwtConfigurer(jwtTokenProvider, resolver));
     }
 

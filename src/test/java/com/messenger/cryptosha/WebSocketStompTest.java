@@ -83,7 +83,7 @@ public class WebSocketStompTest {
     }
 
     private List<Transport> createTransportClient() {
-        List<Transport> transports = new ArrayList<>(1);
+        List<Transport> transports = new ArrayList<>();
         transports.add(new WebSocketTransport(new StandardWebSocketClient()));
         return transports;
     }

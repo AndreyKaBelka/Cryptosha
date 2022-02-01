@@ -1,7 +1,7 @@
 package com.messenger.cryptosha.resource;
 
-import com.messenger.cryptosha.NotFoundException;
 import com.messenger.cryptosha.dto.UserDTO;
+import com.messenger.cryptosha.exceptions.NotFoundException;
 import com.messenger.cryptosha.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

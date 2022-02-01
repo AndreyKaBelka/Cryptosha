@@ -1,7 +1,7 @@
 package com.messenger.cryptosha.resource;
 
-import com.messenger.cryptosha.exceptions.ChatCreationException;
-import com.messenger.cryptosha.exceptions.UserNotFoundException;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.security.web.csrf.InvalidCsrfTokenException;
@@ -22,6 +22,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ErrorInfo(UrlUtils.buildFullRequestUrl(request), ex.getMessage());
     }
 
+    @Getter
     public static class ErrorInfo {
         private final String url;
         private final String info;
@@ -29,14 +30,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorInfo(String url, String info) {
             this.url = url;
             this.info = info;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public String getInfo() {
-            return info;
         }
     }
 }

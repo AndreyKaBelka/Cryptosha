@@ -10,11 +10,8 @@ public class ChatModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatId;
-
     private String privateKey;
-
     private String publicKey;
-
     private String chatName;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

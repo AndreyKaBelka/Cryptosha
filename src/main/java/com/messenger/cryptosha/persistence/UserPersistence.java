@@ -3,7 +3,6 @@ package com.messenger.cryptosha.persistence;
 import com.messenger.cryptosha.exceptions.UserNotFoundException;
 import com.messenger.cryptosha.model.UserModel;
 import com.messenger.cryptosha.repository.UserRepository;
-import org.h2.engine.User;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 

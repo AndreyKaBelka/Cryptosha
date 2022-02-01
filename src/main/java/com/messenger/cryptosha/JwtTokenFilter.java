@@ -1,6 +1,7 @@
 package com.messenger.cryptosha;
 
 import com.messenger.cryptosha.exceptions.InvalidJwtAuthenticationException;
+import com.messenger.cryptosha.exceptions.UserNotFoundException;
 import com.messenger.cryptosha.resource.JwtTokenProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +33,9 @@ public class JwtTokenFilter extends GenericFilterBean {
                 Authentication auth = tokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
-        } catch (InvalidJwtAuthenticationException e) {
+        } catch (InvalidJwtAuthenticationException | UserNotFoundException e) {
             resolver.resolveException(((HttpServletRequest) request), ((HttpServletResponse) response), null, e);
+            return;
         }
         filterChain.doFilter(request, response);
     }

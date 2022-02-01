@@ -9,6 +9,9 @@ public class ChatNotificationDTO {
     private Long userId;
     private Long messageId;
 
+    public ChatNotificationDTO() {
+    }
+
     public Long getMessageId() {
         return messageId;
     }
@@ -23,9 +26,6 @@ public class ChatNotificationDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public ChatNotificationDTO() {
     }
 
     public Long getId() {

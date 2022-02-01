@@ -14,6 +14,10 @@ public class UserDTO {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -22,15 +26,11 @@ public class UserDTO {
         this.username = username;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Set<Long> getChats() {
+        return chatsId;
     }
 
     public void setChats(Set<Long> chatsId) {
         this.chatsId = chatsId;
-    }
-
-    public Set<Long> getChats() {
-        return chatsId;
     }
 }
