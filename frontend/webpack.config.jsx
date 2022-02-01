@@ -1,3 +1,4 @@
+require("babel-polyfill");
 const webpack = require('webpack');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -34,7 +35,7 @@ if (devMode) {
 
 module.exports = {
     entry: {
-        main: ["./src/main/client"]
+        main: ["babel-polyfill", "./src/main/client"]
     },
     resolve: {
         roots: [path.resolve(__dirname, 'src')],
@@ -50,7 +51,8 @@ module.exports = {
             "https": false,
             "stream": false,
             "crypto": false,
-            "crypto-browserify": require.resolve('crypto-browserify')
+            "crypto-browserify": require.resolve('crypto-browserify'),
+            "bcryptjs": require.resolve("bcryptjs")
         }
     },
     plugins,

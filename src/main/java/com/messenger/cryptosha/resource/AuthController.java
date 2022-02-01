@@ -29,7 +29,7 @@ public class AuthController {
 
     @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity getAuthUser(@RequestBody Map<String, String> data) {
+    ResponseEntity<?> getAuthUser(@RequestBody Map<String, String> data) {
         try {
             String username = data.get("username");
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.get("passwordHash")));
